@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.sabith_ak.mvvmbase.ui.login.LoginActivity">
     <data>
+        <import type="com.sabith_ak.mvvmbase.ui.login.LoginActivityViewModel.FormErrors"/>
         <variable
             name="viewModel"
             type="com.sabith_ak.mvvmbase.ui.login.LoginActivityViewModel" />
@@ -13,42 +14,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/_24sdp">
-        <TextView
-            android:id="@+id/tv_title"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_user_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/successfully_compiled"
-            android:textStyle="bold"
-            android:textSize="@dimen/_24sdp"
-            android:textAlignment="viewStart"
-            android:layout_margin="@dimen/_4sdp"
-            android:textColor="@color/colorBlack"
-            android:padding="@dimen/_4sdp"
+            android:layout_margin="@dimen/_12sdp"
+            app:errorEnabled="true"
+            app:errorText='@{viewModel.formErrors.contains(FormErrors.MISSING_NAME) ? @string/invalid_username : ""}'
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-        <TextView
-            android:id="@+id/tv_sub_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias=".3">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Username"
+                android:text="@={viewModel.userName}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/congratulations"
-            android:textSize="@dimen/_16sdp"
-            android:textAlignment="viewStart"
-            android:layout_margin="@dimen/_4sdp"
-            android:padding="@dimen/_4sdp"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginTop="@dimen/_12sdp"
+            app:errorEnabled="true"
+            app:errorText='@{viewModel.formErrors.contains(FormErrors.INVALID_PASSWORD) ? @string/invalid_password : ""}'
+            app:layout_constraintTop_toBottomOf="@id/til_user_name"
+            app:layout_constraintStart_toStartOf="@id/til_user_name"
+            app:layout_constraintEnd_toEndOf="@id/til_user_name">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Password"
+                android:text="@={viewModel.password}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
-            android:id="@+id/btn_navigate_main"
+            android:id="@+id/btn_login"
             android:layout_width="@dimen/_200sdp"
             android:layout_height="wrap_content"
-            android:text="@string/click_here"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/login"
             android:textAllCaps="false"
             android:onClick="@{()->viewModel.navigateToMainActivity()}"
-            app:layout_constraintStart_toStartOf="@id/tv_sub_title"
-            app:layout_constraintEnd_toEndOf="@id/tv_sub_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_sub_title"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="@id/til_password"
+            app:layout_constraintEnd_toEndOf="@id/til_password"
+            app:layout_constraintTop_toBottomOf="@id/til_password"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

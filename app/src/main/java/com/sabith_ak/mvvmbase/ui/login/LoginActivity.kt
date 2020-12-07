@@ -2,7 +2,11 @@ package com.sabith_ak.mvvmbase.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputLayout
 import com.sabith_ak.mvvmbase.BR
 import com.sabith_ak.mvvmbase.R
 import com.sabith_ak.mvvmbase.ViewModelProviderFactory
@@ -29,6 +33,10 @@ class LoginActivity : BaseActivity<
         viewBinding = getViewDataBinding()
         loginViewModel.navigator = this
 
+       /* loginViewModel.getLoginResult().observe(this, { result ->
+            loginViewModel.navigateToMainActivity()
+        })*/
+
     }
 
     override fun getBindingVariable(): Int {
@@ -45,7 +53,22 @@ class LoginActivity : BaseActivity<
     }
 
     override fun onNavigateToMainActivityClicked() {
-        toast("Click Worked!")
         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+    }
+
+    override fun onValidationComplete(isSuccess: Boolean, message: String) {
+        if (isSuccess) {
+            loginViewModel.navigateToMainActivity()
+        } else {
+            toast(message)
+        }
+    }
+
+    object DataBindingAdapter {
+        @BindingAdapter("app:errorText")
+        @JvmStatic
+        fun setErrorMessage(view: TextInputLayout, errorMessage: String) {
+            view.error = errorMessage
+        }
     }
 }

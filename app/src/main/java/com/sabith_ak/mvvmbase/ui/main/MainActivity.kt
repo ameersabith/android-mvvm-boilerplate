@@ -2,12 +2,11 @@ package com.sabith_ak.mvvmbase.ui.main
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.sabith_ak.mvvmbase.databinding.ActivityMainBinding
 import com.sabith_ak.mvvmbase.BR
 import com.sabith_ak.mvvmbase.R
 import com.sabith_ak.mvvmbase.ViewModelProviderFactory
+import com.sabith_ak.mvvmbase.databinding.ActivityMainBinding
 import com.sabith_ak.mvvmbase.ui.base.BaseActivity
-import com.sabith_ak.mvvmbase.util.toast
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<
